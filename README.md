@@ -1,0 +1,1 @@
+visual studio project can be opened and built, tested on debug x64, instructions present inside the program, first input how many cities there are, then select an option for setting the distance values
