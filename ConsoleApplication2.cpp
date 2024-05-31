@@ -18,14 +18,70 @@ int calculateTotalCost(vector<int> route, vector<vector<int>> distances) {
     return totalCost;
 }
 
+void generateRandomMatrix(int n, vector<vector<int>>& distances) {
+    srand(time(0));
+    for (int i = 0; i < n; ++i) {
+        for (int j = i; j < n; ++j) {
+            if (i == j) {
+                distances[i][j] = 0;
+            }
+            else {
+                int random_distance = 1 + rand() % 100;
+                distances[i][j] = random_distance;
+                distances[j][i] = random_distance;
+            }
+        }
+    }
+}
+
+
+void printMatrix(const vector<vector<int>>& distances) {
+    for (const auto& row : distances) {
+        for (const auto& val : row) {
+            cout << val << " "; 
+        }
+        cout << endl;
+    }
+}
+
 int main() {
     int numCities = 4;
-    vector<vector<int>> distances = {
+
+    cout << "Enter the number of cities: ";
+    cin >> numCities;
+    vector<vector<int>> distances(numCities, vector<int>(numCities));
+    
+
+    // Choice variable for the input matrix
+    cout << "Press 1 for manual input, press 2 to generate the matrix randomly, 3 for default example: ";
+    int choice;
+    cin >> choice;
+
+    if (choice == 1){
+        cout << "Enter the distance matrix:\n";
+        for (int i = 0; i < numCities; ++i) {
+            for (int j = 0; j < numCities; ++j) {
+                cin >> distances[i][j];
+            }
+        }
+    }
+    else if (choice == 2){
+        generateRandomMatrix(numCities, distances);
+        std::cout << "Generated distance matrix:\n";
+        printMatrix(distances);
+    }
+    else
+    {
+        cout << "resorted to defaults!" << std::endl;
+        numCities = 4;
+        distances = {
             {0, 10, 15, 20},
             {10, 0, 35, 25},
             {15, 35, 0, 30},
             {20, 25, 30, 0}
-    };
+        };
+    }
+
 
     cout << "BFS\n";
     cout << "----------\n";
